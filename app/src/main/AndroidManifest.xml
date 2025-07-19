@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <queries>
+        <package android:name="vn.com.vng.zalopay" />
+        <package android:name="vn.com.vng.zalopay.sbmc" />
+    </queries>
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <queries>
+        <package android:name="vn.com.vng.zalopay" />
+        <package android:name="vn.com.vng.zalopay.sbmc" />
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/flower_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/flower_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GroupProject_FlowerShop"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".AdminOrderAcitivity"
+            android:exported="false" />
+        <activity
+            android:name=".IndividualOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.InsertUpdateFlowerActivity"
+            android:exported="false"
+            android:label="@string/app_name_admin" />
+        <activity
+            android:name=".activities.AdminFlowerMngActivity"
+            android:exported="false"
+            android:label="@string/app_name_admin" />
+        <activity
+            android:name=".CheckoutActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="app"
+                    android:scheme="demozpdk" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ViewMapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewCartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AdminChatListActivity"
+            android:exported="false"
+            android:label="@string/app_name_admin" />
+        <activity
+            android:name=".activities.AdminActivity"
+            android:exported="false"
+            android:label="@string/app_name_admin" />
+        <activity
+            android:name=".activities.ChatActivity"
+            android:exported="false"
+            android:label="@string/app_chat" />
+        <activity
+            android:name=".FlowerDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".FlowersList"
+            android:exported="false" />
+        <activity
+            android:name=".TestConnectDBApiActivity"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD5u5YJWWfW76EHkoNaxV63kvNaofO1WMU" />
+    </application>
+
+</manifest>
