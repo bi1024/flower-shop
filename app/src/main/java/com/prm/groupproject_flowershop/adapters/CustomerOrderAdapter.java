@@ -52,7 +52,7 @@ public class CustomerOrderAdapter extends  RecyclerView.Adapter<CustomerOrderAda
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, OrderDetailsActivity.class);
-           intent.putExtra("orderId", order.getOrderId());
+           intent.putExtra("ORDER_ID", order.getOrderId());
             context.startActivity(intent);
         });
     }
