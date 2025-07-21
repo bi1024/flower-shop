@@ -28,6 +28,10 @@
         android:theme="@style/Theme.GroupProject_FlowerShop"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".PaymentSuccessActivity"
+            android:exported="false" />
         <activity
             android:name=".OrderDetailsActivity"
             android:exported="false" />
@@ -47,19 +51,7 @@
             android:label="@string/app_name_admin" />
         <activity
             android:name=".CheckoutActivity"
-            android:exported="true"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="app"
-                    android:scheme="demozpdk" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".ViewMapActivity"
             android:exported="false" />
