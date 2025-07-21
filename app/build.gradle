@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.lamvo.groupproject_flowershop'
-    compileSdk 33
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.lamvo.groupproject_flowershop"
@@ -40,8 +40,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'androidx.room:room-common:2.5.2'
-    implementation fileTree(dir: 'E:\\projects\\android\\prm392_grouppj_flower_shop\\libraries\\zpdk_v2.0.4\\android', include: ['*.aar', '*.jar'], exclude: [])
+    implementation fileTree(dir: 'D:\\FPT_University\\PRM392\\flower-shopp\\libraries\\zpdk_v2.0.4\\android', include: ['*.aar', '*.jar'], exclude: [])
     implementation files('\\libraries\\zpdk_v2.0.4\\android')
+    implementation 'androidx.activity:activity:1.10.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
