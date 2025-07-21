@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.lamvo.groupproject_flowershop'
+    namespace 'com.prm.groupproject_flowershop'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.lamvo.groupproject_flowershop"
+        applicationId "com.prm.groupproject_flowershop"
         minSdk 24
         targetSdk 33
         versionCode 1
