@@ -12,10 +12,6 @@
         <package android:name="vn.com.vng.zalopay" />
         <package android:name="vn.com.vng.zalopay.sbmc" />
     </queries>
-
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <queries>
         <package android:name="vn.com.vng.zalopay" />
         <package android:name="vn.com.vng.zalopay.sbmc" />
@@ -32,6 +28,9 @@
         android:theme="@style/Theme.GroupProject_FlowerShop"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".OrderDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".AdminOrderAcitivity"
             android:exported="false" />

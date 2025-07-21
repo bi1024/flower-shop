@@ -68,8 +68,10 @@ public class AdminOrderAcitivity extends AppCompatActivity {
                 }
                 List<OrderViewDao> orderViewDaos = new ArrayList<>();
                 for (Order o:orderList) {
-                    OrderViewDao orderViewDao = new OrderViewDao(o.getOrderStatus(),o.getTotal(),"CUSTOMER");
+//                    OrderViewDao orderViewDao = new OrderViewDao(o.getOrderStatus(),o.getTotal(),"CUSTOMER");
+                    OrderViewDao orderViewDao = new OrderViewDao(o.getId(),o.getOrderStatus(),o.getTotal(),"CUSTOMER");
                     Call<Customer> customerCall = customerService.getCustomer(o.getCustomerId());
+
                     orderViewDaos.add(orderViewDao);
                 }
                 List<OrderViewDao> orderViewDaos1 = orderViewDaos;

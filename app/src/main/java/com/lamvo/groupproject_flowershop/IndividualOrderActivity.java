@@ -111,7 +111,8 @@ public class IndividualOrderActivity extends AppCompatActivity {
                         List<Order> orders = response.body();
                         List<OrderViewDao> orderViewDaos = new ArrayList<>();
                         for (Order o:orders) {
-                             OrderViewDao orderViewDao = new OrderViewDao(o.getOrderStatus(),o.getTotal(),customerName);
+//                             OrderViewDao orderViewDao = new OrderViewDao(o.getOrderStatus(),o.getTotal(),customerName);
+                            OrderViewDao orderViewDao = new OrderViewDao(o.getId(),o.getOrderStatus(),o.getTotal(),customerName);
                              orderViewDaos.add(orderViewDao);
                         }
                         List<OrderViewDao> x = orderViewDaos;

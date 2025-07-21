@@ -132,9 +132,11 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void getReceiver(long id) {
         Call<Customer> call = customerService.getCustomer(id);
+
         call.enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
+                Log.d("Customer",response.body().toString());
                 Customer customer = response.body();
                 if (customer == null) {
                     return;

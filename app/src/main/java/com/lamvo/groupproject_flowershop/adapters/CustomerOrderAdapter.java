@@ -1,6 +1,8 @@
 package com.lamvo.groupproject_flowershop.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lamvo.groupproject_flowershop.OrderDetailsActivity;
 import com.lamvo.groupproject_flowershop.R;
 import com.lamvo.groupproject_flowershop.dao.OrderViewDao;
 import com.lamvo.groupproject_flowershop.models.Cart;
@@ -34,14 +37,31 @@ public class CustomerOrderAdapter extends  RecyclerView.Adapter<CustomerOrderAda
         return new MyViewHolder(view);
     }
 
+//    @Override
+//    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+//
+//        String total = String.valueOf(orderList.get(position).getTotal());
+//        holder.total.setText(total);
+//        holder.orderStatus.setText(orderList.get(position).getOrderStatus());
+//        holder.customerName.setText(orderList.get(position).getCustomerName());
+//    }
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        OrderViewDao order = orderList.get(position);
+        Log.d("order",orderList.get(position).toString());
 
-        String total = String.valueOf(orderList.get(position).getTotal());
-        holder.total.setText(total);
-        holder.orderStatus.setText(orderList.get(position).getOrderStatus());
-        holder.customerName.setText(orderList.get(position).getCustomerName());
+        holder.total.setText(String.valueOf(order.getTotal()));
+        holder.orderStatus.setText(order.getOrderStatus());
+        holder.customerName.setText(order.getCustomerName());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, OrderDetailsActivity.class);
+           intent.putExtra("orderId", order.getOrderId());
+            context.startActivity(intent);
+        });
     }
+
+
     public void setOrderList(List<OrderViewDao> orderList){
         this.orderList = orderList;
         notifyDataSetChanged();

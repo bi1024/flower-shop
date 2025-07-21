@@ -90,11 +90,9 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
         ggMap.setOnMapClickListener(this);
 
         List<LatLng> markerLocations = new ArrayList<>();
-        markerLocations.add(new LatLng(10.875169809132379, 106.80090390746861));
-        markerLocations.add(new LatLng(10.80139303764417, 106.61866451134182));
-        markerLocations.add(new LatLng(10.835592562884592, 106.65875205907219));
-        markerLocations.add(new LatLng(10.740697737263517, 106.70222782340555));
-        markerLocations.add(new LatLng(10.772025667031546, 106.72718620239048));
+        markerLocations.add(new LatLng(15.983617, 108.256580));
+        markerLocations.add(new LatLng(16.093125, 108.217162));
+
 
         int i = 1;
         for (LatLng location : markerLocations) {
@@ -102,8 +100,8 @@ public class ViewMapActivity extends AppCompatActivity implements OnMapReadyCall
             i++;
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(location)
-                    .title(title)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.flower_map_marker));
+                    .title(title);
+//                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.flower_map_marker));
             ggMap.addMarker(markerOptions);
         }
 

@@ -1,37 +1,48 @@
 package com.lamvo.groupproject_flowershop.dao;
 
 public class OrderViewDao {
-  private String orderStatus;
-  private double total;
-  private String customerName;
+    private long orderId;
+    private String orderStatus;
+    private double total;
+    private String customerName;
 
-  public OrderViewDao(String orderStatus, double total, String customerName) {
-    this.orderStatus = orderStatus;
-    this.total = total;
-    this.customerName = customerName;
-  }
+    public OrderViewDao(String orderStatus, double total, String customerName) {
 
-  public String getOrderStatus() {
-    return orderStatus;
-  }
+        this.orderStatus = orderStatus;
+        this.total = total;
+        this.customerName = customerName;
+    }
 
-  public void setOrderStatus(String orderStatus) {
-    this.orderStatus = orderStatus;
-  }
+    public OrderViewDao(long orderId, String orderStatus, double total, String customerName) {
+        this.orderId = orderId;
+        this.orderStatus = orderStatus;
+        this.total = total;
+        this.customerName = customerName;
+    }
 
-  public double getTotal() {
-    return total;
-  }
+    public String getOrderStatus() {
+        return orderStatus;
+    }
 
-  public void setTotal(double total) {
-    this.total = total;
-  }
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
-  public String getCustomerName() {
-    return customerName;
-  }
+    public double getTotal() {
+        return total;
+    }
 
-  public void setCustomerName(String customerName) {
-    this.customerName = customerName;
-  }
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public long getOrderId(){return orderId;}
 }
