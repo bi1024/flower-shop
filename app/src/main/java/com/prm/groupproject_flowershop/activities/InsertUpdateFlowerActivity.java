@@ -4,14 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.prm.groupproject_flowershop.R;
 import com.prm.groupproject_flowershop.SignInActivity;
@@ -20,15 +24,33 @@ import com.prm.groupproject_flowershop.apis.FlowerService;
 import com.prm.groupproject_flowershop.constants.AppConstants;
 import com.prm.groupproject_flowershop.models.Flower;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class InsertUpdateFlowerActivity extends AppCompatActivity {
+    private static final int IMAGE_PICKER_REQUEST = 1001;
+    private Uri selectedImageUri;
+    private ImageView imagePreview;
+    private Button btnUploadImage;
+    boolean isImageUploading = false;//flag for logic
+
     EditText etName, etPrice, etUnitInStock, etDescription, etImageUrl;
     Button btnSave, btnCancel;
     Flower updatedFlower;
     FlowerService flowerService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +66,17 @@ public class InsertUpdateFlowerActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancel);
         flowerService = FlowerRepository.getFlowerService();
 
+        imagePreview = findViewById(R.id.imagePreview);
+        btnUploadImage = findViewById(R.id.btnUploadImage);
+
+        btnUploadImage.setOnClickListener(v -> {
+            ImagePicker.with(this)
+                    .crop()
+                    .compress(1024)
+                    .maxResultSize(1080, 1080)
+                    .start(IMAGE_PICKER_REQUEST);
+        });
+
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +91,10 @@ public class InsertUpdateFlowerActivity extends AppCompatActivity {
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (isImageUploading) {
+                        Toast.makeText(InsertUpdateFlowerActivity.this, "Please wait for image upload to complete.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Flower flower = getFlowerObj();
                     flower.setId(updatedFlower.getId());
                     // update flower
@@ -68,6 +105,10 @@ public class InsertUpdateFlowerActivity extends AppCompatActivity {
             btnSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (isImageUploading) {
+                        Toast.makeText(InsertUpdateFlowerActivity.this, "Please wait for image upload to complete.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     // add flower
                     Flower flower = getFlowerObj();
                     addFlower(flower);
@@ -150,4 +191,67 @@ public class InsertUpdateFlowerActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == IMAGE_PICKER_REQUEST) {
+            selectedImageUri = data.getData();
+            imagePreview.setImageURI(selectedImageUri);
+
+            // Upload to Cloudinary
+            uploadImageToCloudinary(selectedImageUri);
+        }
+    }
+
+    private void uploadImageToCloudinary(Uri imageUri) {
+        isImageUploading = true;
+        String cloudName = "dsvllb1am";
+        String uploadPreset = "android_preset";
+
+        File file = new File(imageUri.getPath());
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(),
+                        RequestBody.create(file, MediaType.parse("image/*")))
+                .addFormDataPart("upload_preset", uploadPreset)
+                .build();
+
+        Request request = new Request.Builder()
+                .url("https://api.cloudinary.com/v1_1/" + cloudName + "/image/upload")
+                .post(requestBody)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+                isImageUploading = false;
+                runOnUiThread(() -> Toast.makeText(InsertUpdateFlowerActivity.this, "Upload failed", Toast.LENGTH_SHORT).show());
+
+            }
+
+            @Override
+            public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject json = new JSONObject(response.body().string());
+                        String imageUrl = json.getString("secure_url");
+
+                        runOnUiThread(() -> {
+                            etImageUrl.setText(imageUrl);
+                            Toast.makeText(InsertUpdateFlowerActivity.this, "Image uploaded!", Toast.LENGTH_SHORT).show();
+                        });
+                        isImageUploading = false;
+                    } catch (JSONException e) {
+                        isImageUploading = false;
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
 }
